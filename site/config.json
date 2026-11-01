@@ -1,0 +1,28 @@
+{
+ "brand": "Namaste Metaphysical Shop",
+ "short_name": "Metaphysical",
+ "site_url": "https://namastemetaphysicalshop.com",
+ "storefront": "Namaste Metaphysical Shop",
+ "store_type": "Store",
+ "bestseller_collections": [
+  "spiritual-tools",
+  "pendulums",
+  "statues",
+  "singing-bowls",
+  "hand-bells",
+  "oils",
+  "ritual-essentials",
+  "runes"
+ ],
+ "theme": {
+  "ink": "#24301f",
+  "paper": "#f2ede1",
+  "accent": "#c4622d",
+  "fonts": "https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Figtree:wght@400;600;700&display=swap"
+ },
+ "REVIEW_URL": "",
+ "GOOGLE_SITE_VERIFICATION": "",
+ "siblings": [],
+ "include_no_photo": false,
+ "GA_MEASUREMENT_ID": "G-Y7R5K9NMW0"
+}

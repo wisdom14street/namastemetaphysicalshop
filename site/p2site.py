@@ -1,0 +1,23 @@
+"""Find-us and sales copy for namastemetaphysicalshop.com. Written for this site only."""
+COPY = {
+ 'og_tag': 'Altar tools, pendulums, ritual oils and spell supplies',
+ 'bar': 'Ships from NYC &middot; Pickup at 2 W 14th St',
+ 'foot': 'Collecting an order? It waits at Namaste Bookshop, on the south side of West 14th Street close to Fifth Avenue.',
+ 'cta': ('Open the drawers', '/shop/'), 'heroloc': '',
+ 'badges': [('Supplies for practice', 'Sorted by drawer, not by gift'), ('Honest labels', 'Tradition, not promises'), ('From NYC', 'Shipped, or picked up on 14th St'), ('Secure checkout', 'Shopify via namastebookshop.com')],
+ 'chips_title': 'Drawers', 'chips': [], 'best': None, 'gift': None,
+ 'set_sub': 'Pieces often used with this one. Untick what you already have.',
+ 'popular': [('Altar tools', '/shop/altar-tools-vessels/'), ('Pendulums', '/shop/pendulums-boards/'), ('Singing bowls', '/shop/singing-bowls-bells-sound/'), ('Ritual oils', '/shop/ritual-essential-oils/'), ('First altar guide', '/guide/setting-up-an-altar/')],
+ 'visit_title': 'Collect Ritual Supplies at 2 W 14th St, Manhattan',
+ 'visit_desc': 'Where to get your Namaste Metaphysical Shop order in person: Namaste Bookshop, 2 West 14th Street, by Union Square. Subway routes, opening hours and the pickup steps.',
+ 'visit_h1': 'Picking up your supplies',
+ 'visit_lead': 'Namaste Metaphysical Shop sells online. The supplies are stocked at <b>Namaste Bookshop</b>, 2 West 14th Street, and pickup orders are handed over there.',
+ 'sign': 'Watch for the Namaste Bookshop sign on 14th Street\u2019s south side, near Fifth Avenue. Give the counter the name on your order.',
+ 'union': ['Get off at <b>14 St&ndash;Union Square</b> (4, 5, 6, L, N, Q, R, W).', 'Walk west on 14th Street past Fifth Avenue.', 'The shop is on the south side right after the corner; allow about 4 minutes.'],
+ 'sixth': ['Leave <b>14 St / 6 Av</b> (F, M, L) or the <b>14 St</b> station on the 1, 2 and 3.', 'Walk east along the south side of 14th Street.', 'You reach the shop shortly before Fifth Avenue, around 4 minutes on foot.'],
+ 'pickup_intro': 'It takes three moves: select Pickup when paying, watch for the ready email, then drop in while the shop is open.',
+ 'vfaq': [('Is there a separate metaphysical store?', 'No. The supplies are stocked at Namaste Bookshop, 2 West 14th Street.'),
+          ('When is a pickup ready?', 'Usually within about 2 hours; the ready email tells you.'),
+          ('Can I smell oils before buying?', 'Ask at the counter during opening hours.'),
+          ('How do I reach the shop?', 'Call 212-645-0141 or email info@namastebookshop.com.')],
+ 'llms': 'Online shop for ritual, altar and metaphysical supplies: altar tools and vessels (chalices, goblets, cauldrons, offering bowls, diyas, mortars), deity and altar statues, pendulums and boards, runes and scrying mirrors, singing bowls, bells and tuning forks, ritual and essential oils, loose herbs and salts, ritual waters and mists, loose resin and bakhoor, small spellwork candles, protective symbols and ritual kits. Intentions are shown as tradition, not claims. Checkout on Shopify through namastebookshop.com; ships from New York City or pickup at Namaste Bookshop, 2 W 14th St.'}
