@@ -99,7 +99,7 @@ def FOOTER_EXPLORE(S):
 FOOT_BLURB = 'Supplies for practice rather than decor: the tools, vessels, oils and herbs that go on an altar or into a ritual.'
 HERO_BASES = ('altar', 'pendulums', 'sound', 'statues')
 def HERO(S): return {'eyebrow': '', 'h1': '', 'lede': ''}
-ORDER = ['altar', 'pendulums', 'sound', 'statues', 'divination', 'oils', 'herbs', 'waters', 'candles', 'smoke', 'symbols', 'kits']
+ORDER = ['altar', 'pendulums', 'sound', 'statues', 'divination', 'oils', 'herbs', 'waters', 'essences', 'candles', 'smoke', 'symbols', 'kits']
 def _pick(S, k, n=8): return [x for x in (S.by_rank if S.HAS_RANK else (lambda xs: xs))([x for x in S.leaders if x['aisle'] == k]) if not x['noimg']][:n]
 def HOME_BODY(S):
     tiles = ''
