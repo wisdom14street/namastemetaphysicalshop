@@ -10,22 +10,27 @@ NAV_AISLES = True
 PRICE_OPTS = '<option value="0-10">Under $10</option><option value="0-25">Under $25</option><option value="0-50">Under $50</option><option value="50-99999">$50 and up</option>'
 PRICE_BANDS = [('Under $12', 0, 12), ('$12 to $35', 12, 35), ('$35 and up', 35, 1e9)]
 _T = {
- 'pendulums': {'Pendulum', 'Pendulum Board', 'Dowsing Rod'},
- 'divination': {'Rune Set', 'Scrying Mirror', 'Tarot Talisman'},
- 'altar': {'Chalice Cup', 'Goblet', 'Offering Bowls', 'Diya', 'Mortar & Pestle', 'Bottles', 'Oil Burner'},
- 'statues': {'Statue'},
- 'sound': {'Brass Singing Bowl', 'Crystal Singing Bowl', 'Singing Bowl Cushion', 'Singing Bowl Mallet', 'Hand Bells', 'Chimes', 'Tuning Fork', 'Musical instruments', 'Instruments'},
+ 'pendulums': {'Pendulum', 'Pendulum Board', 'Dowsing Rod', 'Pendulum44.95'},
+ 'divination': {'Rune Set', 'Runes', 'Scrying Mirror', 'Tarot Talisman', 'Spirit Board'},
+ 'altar': {'Chalice Cup', 'Goblet', 'Offering Bowls', 'Diya', 'Mortar & Pestle', 'Bottles', 'Oil Burner', 'Altar Tools', 'Candle Snuffers', 'Crystal Bowl'},
+ 'statues': {'Statue', 'Spirit Animals'},
+ 'sound': {'Singing Bowl', 'Brass Singing Bowl', 'Crystal Singing Bowl', 'Singing Bowl Cushion', 'Singing Bowl Mallet', 'Hand Bells', 'Chimes', 'Tuning Fork', 'Musical instruments', 'Instruments'},
  'oils': {'Essential Oils', 'Aroma Oil', 'Fragrance Oil'},
  'herbs': {'Herbs', 'Herb', 'Bath Salt'},
  'waters': {'Smudge Sprays Fine Mists', 'Cleansing Water', 'Spiritual Spray', 'Room Spray'},
- 'symbols': {'Wall Hanging'},
+ 'symbols': {'Wall Hanging', 'Tapestry', 'Prayer Flags'},
  'kits': {'Spiritual Kit & Bundle', 'Energy Cleansing Kit'},
 }
 _T2 = {t: k for k, ts in _T.items() for t in ts}
 SPELL_CANDLE = re.compile(r'spell|chime candle|mini (ritual )?candle|ritual candle|7 ?day|seven day|novena|soul ?sticks|magic mini|offering candle|altar candle', re.I)
 def category(p):
     t, ty = p['title'], p.get('product_type', '') or ''
-    if re.search(r'\bby [A-Z]|\bbook\b|deck\b|mug\b|compact .*mirror|mirror - assorted|flower essence|supplement|inhaler|soap', t, re.I): return None
+    if ty == 'Flower Essence' and not re.search(r'\bbook\b|\b[Bb]y [A-Z]', t): return 'essences'
+    if ty == 'Roll On Fragrance Oil': return 'oils'
+    if ty in ('Brass Singing Bowl', 'Singing Bowl Cushion') and re.search(r'cushion|mallet|striker', t, re.I): return 'sound'
+    if ty == 'Sacred Geometry Set' or (ty == 'Wood Storage Box' and not re.search(r'\bmug\b', t, re.I)): return 'altar'
+    if ty in ('Dreamcatchers', 'Dreamcatcher'): return 'symbols'
+    if re.search(r'\b[Bb]y [A-Z]|\bbook\b|deck\b|mug\b|compact .*mirror|mirror - assorted|flower essence|supplement|inhaler|\bsoaps?\b|bracelet|necklace|earring|\bring\b', t, re.I): return None
     if ty in _T2:
         k = _T2[ty]
         if ty == 'Chimes' and not re.search(r'chime', t, re.I): return None
@@ -34,9 +39,12 @@ def category(p):
     if ty in ('Incense Holder', 'Incense Burner') and re.search(r'cauldron', t, re.I): return 'altar'
     if ty == 'Incense Burner' and re.search(r'charcoal', t, re.I): return 'smoke'
     if ty == 'Candle Holder' and re.search(r'chime|spell|altar', t, re.I): return 'candles'
-    if ty in ('Resin Incense',) and not re.search(r'stick|cone|charcoal', t, re.I): return 'smoke'
+    if ty in ('Resin Incense',) and (re.search(r'charcoal|\b30 ?g|grams', t, re.I) or not re.search(r'stick|cone|\bpack\b', t, re.I)): return 'smoke'
+    if ty == 'Home Decor' and re.search(r'altar cloth', t, re.I): return 'altar'
+    if ty == 'Home Decor' and re.search(r'scrying mirror', t, re.I): return 'divination'
+    if ty == 'Candle Holder' and re.search(r'pentacle|pentagram|hamsa|triple moon|evil eye', t, re.I): return 'altar'
     if ty == 'Incense Chips': return 'smoke'
-    if ty in ('Sage', 'Smudging') and re.search(r'kit|abalone|shell|loose|feather|fan|broom|bowl', t, re.I): return 'smoke' if not re.search(r'broom', t, re.I) else 'altar'
+    if ty in ('Sage', 'Smudging', 'Smudging Feather', 'Feather', 'Palo Santo'): return 'altar' if re.search(r'broom|besom', t, re.I) else 'smoke'
     if ty == '' and re.search(r'cauldron|athame|altar (cloth|tile|bell|bowl|broom)|chalice|pentacle (plate|tile|altar)|besom|spell (jar|bottle|kit)|offering bowl|boline', t, re.I): return 'altar'
     return None
 def assign(x): return x['base']
@@ -64,17 +72,18 @@ def _brand_of(title, vendor=''):
 BR = types.SimpleNamespace(NAME={k: n for k, n, _, _ in _BRANDS}, brand_of=_brand_of, FACTS={})
 
 AISLES = {
- 'altar':      ('Altar Tools & Vessels', 'Altar tools', 'altar-tools-vessels', 'Chalices, goblets, cauldrons, offering bowls, diyas, mortars and altar brooms: the working pieces of an altar.', '#8a4b2e'),
- 'statues':    ('Deities & Altar Statues', 'Statues', 'deity-altar-statues', 'Figures to stand at the center of an altar: deities, Buddhas, angels, guardians and familiars.', '#6a5a2e'),
+ 'altar':      ('Altar Tools & Vessels', 'Altar tools', 'altar-tools-vessels', 'Chalices, goblets, cauldrons, offering and stone bowls, diyas, mortars, candle snuffers and altar brooms: the working pieces of an altar.', '#8a4b2e'),
+ 'statues':    ('Deities & Altar Statues', 'Statues', 'deity-altar-statues', 'Figures to stand at the center of an altar: deities, Buddhas, angels, guardians, and small carved spirit animals.', '#6a5a2e'),
  'pendulums':  ('Pendulums & Boards', 'Pendulums', 'pendulums-boards', 'Crystal, brass and copper pendulums, pendulum boards and dowsing rods.', '#3b5a6a'),
- 'divination': ('Runes, Scrying & Talismans', 'Divination tools', 'runes-scrying-talismans', 'Rune sets, obsidian scrying mirrors and tarot talismans.', '#4a3b6a'),
+ 'divination': ('Runes, Scrying & Talismans', 'Divination tools', 'runes-scrying-talismans', 'Rune sets, obsidian scrying mirrors, spirit boards and tarot talismans.', '#4a3b6a'),
  'sound':      ('Bowls, Bells & Sound Tools', 'Sound', 'singing-bowls-bells-sound', 'Singing bowls and their cushions and mallets, altar bells, tuning forks, chimes and rainsticks.', '#9a7a1a'),
  'oils':       ('Ritual & Essential Oils', 'Oils', 'ritual-essential-oils', 'Single-note essential oils, aroma oils and intention-blend oils for dressing candles and tools.', '#2e6a4a'),
  'herbs':      ('Loose Herbs & Salts', 'Herbs & salts', 'loose-herbs-salts', 'Dried loose herbs and bath salts for sachets, jars and ritual baths.', '#5a7a2e'),
  'waters':     ('Ritual Waters & Mists', 'Waters & mists', 'ritual-waters-mists', 'Florida water, rose water, cleansing waters and smoke-free sprays.', '#2e5a7a'),
- 'smoke':      ('Loose Resin, Bakhoor & Smudge Kits', 'For the censer', 'loose-resin-bakhoor-smudge-kits', 'Only the loose materials for a censer or shell: resin, bakhoor chips, abalone shells and ready smudge kits.', '#6a3b3b'),
+ 'essences':   ('Flower Essences', 'Flower essences', 'flower-essences', 'Single-flower and blended essences in small dropper bottles, the kind kept beside an altar or meditation cushion. They are sold as herbal supplements; read the label, and we make no health claims for them.', '#6a8a4b'),
+ 'smoke':      ('Smudge, Resin & Censer Supplies', 'Smudge & resin', 'loose-resin-bakhoor-smudge-kits', 'Sage and herb bundles, palo santo, smudging feathers and abalone shells, plus loose resin, bakhoor and charcoal for the censer. Stick and cone incense lives on our incense sites.', '#6a3b3b'),
  'candles':    ('Spellwork Candles', 'Spell candles', 'spellwork-candles', 'Small chime, mini ritual and spell candles meant to burn down in a single working.', '#9a3b5a'),
- 'symbols':    ('Protective Symbols & Hangings', 'Symbols', 'protective-symbols-hangings', 'Hamsas, evil eyes and other symbols to hang by a door or above an altar.', '#3b6a8a'),
+ 'symbols':    ('Protective Symbols, Tapestries & Flags', 'Symbols & hangings', 'protective-symbols-hangings', 'Hamsas, evil eyes, deity tapestries for behind an altar, and Tibetan prayer flags.', '#3b6a8a'),
  'kits':       ('Ritual Kits', 'Kits', 'ritual-kits', 'Ready-made bundles that gather the pieces for one kind of practice.', '#7a4b6a'),
 }
 VISIT_EYEBROW = 'Want to hold it first?'
@@ -139,7 +148,7 @@ def BRANDS_DESC(S): return 'Named makers of the oils, waters, resins and tools w
 BRANDS_H1 = 'Makers'
 def BRANDS_LEAD(S, n): return f'{n} named makers. Most altar tools come from importers without a brand, so browsing by <a href="/shop/">drawer</a> is usually quicker.'
 PAIR = {'altar': ['candles', 'oils'], 'statues': ['candles', 'altar'], 'pendulums': ['divination'], 'divination': ['pendulums'], 'sound': ['sound'], 'oils': ['candles', 'herbs'], 'herbs': ['oils', 'altar'],
-        'waters': ['smoke', 'herbs'], 'smoke': ['altar', 'waters'], 'candles': ['oils', 'herbs'], 'symbols': ['waters'], 'kits': ['candles']}
+        'waters': ['smoke', 'herbs'], 'smoke': ['altar', 'waters'], 'candles': ['oils', 'herbs'], 'symbols': ['waters'], 'kits': ['candles'], 'essences': ['oils', 'herbs']}
 CART_PAIR_TITLE = 'Often used together'
 REL_BRAND = 'More from {brand}'
 REL_SCENT = 'Also for {scent}'
@@ -151,7 +160,8 @@ USE = {'altar': 'A working piece for the altar or ritual table.', 'statues': 'A 
        'herbs': 'Dried herb or salt for sachets, spell jars or a ritual bath. Not sold as food or medicine.', 'waters': 'A liquid alternative to smoke: sprinkle or mist a room, altar or doorway. Not for drinking.',
        'smoke': 'Loose material for burning on charcoal or in a shell. Burn in a heat-safe vessel with airflow and never leave it unattended.',
        'candles': 'Small candles for one sitting. Use a holder, keep away from drafts and anything flammable, and never leave a flame unattended.',
-       'symbols': 'A symbol to hang or place; protective meanings come from folk tradition.', 'kits': 'A bundle that collects the pieces for one practice.'}
+       'symbols': 'A symbol to hang or place; protective meanings come from folk tradition.', 'kits': 'A bundle that collects the pieces for one practice.',
+       'essences': 'A dropper bottle of flower essence. It is labeled as an herbal supplement, so follow the maker\u2019s directions; nothing here is a medical claim.'}
 def describe(S, x):
     s = [f"{E(x['title'])}, from the {E(AISLES[x['aisle']][0].lower())} drawer.", USE.get(x['aisle'], '')]
     if x['family']: s.append(f"Its name points to {E(S.FAM_NAME[x['family']].lower())}; that comes from practice and folklore, not a promised result.")
@@ -173,7 +183,7 @@ FAQ_H1 = 'Supply shop questions'
 def FAQ(S):
     return [('Do you ship oils and waters?', 'Yes, from New York City, through checkout on namastebookshop.com. Options and costs show before you pay.'),
             ('Is in-person pickup possible?', f'It is: select Pickup while paying and the order waits at {S.STORE_ADDR}.' + (f' Most are {S.READY.lower()}.' if S.READY else '')),
-            ('Why is there so little incense here?', 'Namaste has dedicated incense shops. This site carries only loose resin, bakhoor and smudge kits for a censer or shell.'),
+            ('Why is there so little incense here?', 'Namaste has dedicated incense shops. Here you will find only what a smudging or censer practice needs: sage and herb bundles, palo santo, feathers, shells, loose resin, bakhoor and charcoal.'),
             ('Are the essential oils safe on skin?', 'Essential oils are concentrated. Dilute them in a carrier oil before skin contact, patch-test first, and keep them away from eyes, children and pets.'),
             ('What does "intention on the label" mean?', 'It is the purpose written in the product name, such as protection or love. It reflects tradition, not a promised effect.'),
             ('Do you carry tarot decks and books?', 'Not on this site; Namaste Bookshop carries them.')]
@@ -211,3 +221,15 @@ def ICON_DRAW(d, s, th):
     d.ellipse([cx-r, cy-r, cx+r, cy+r], outline=th['accent'], width=w)
     pts = [(cx + r*0.92*math.sin(math.radians(a)), cy - r*0.92*math.cos(math.radians(a))) for a in (0, 144, 288, 72, 216, 0)]
     d.line(pts, fill=th['paper'], width=w, joint='curve')
+
+# ---- presentation pass hooks ----
+import present as _PR
+DESC_MODE = 'strict'
+DESC_HEAD = 'About this piece'
+PH_LABEL = 'Photo coming soon'
+PH_CLASS = 'apoth'
+def PH_LINES(x): return [(x['ctitle'], 't1'), (AISLES[x['aisle']][1], 't2')]
+
+PK_LABEL = 'Pick up at the shop'
+PH_FILTER = 'Only items with photos'
+INSTOCK_NOTE = 'Everything shown is in stock at the shop, checked every day.'

@@ -1,4 +1,4 @@
-:root{--ink:#24301f;--onink:#f2ede1;--paper:#f2ede1;--card:#fbf8f1;--soft:#e6dfcd;--muted:#5d5a48;--line:#d8cfb8;--accent:#c4622d;--onaccent:#fff;--accentdark:#9a4a1e;--focus:#e39a5f;
+:root{--ink:#24301f;--onink:#f2ede1;--paper:#f2ede1;--card:#fbf8f1;--soft:#e6dfcd;--muted:#5d5a48;--line:#d8cfb8;--accent:#a9501f;--onaccent:#fff;--accentdark:#9a4a1e;--focus:#e39a5f;
 --display:"Cinzel",Georgia,serif;--body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;--r:14px;--btnr:999px}
 body{background:var(--paper) radial-gradient(circle at 10% 0,#e9e1cc 0,transparent 40%)}
 .bar{background:var(--accent);letter-spacing:.1em}
@@ -23,3 +23,12 @@ h1,h2{letter-spacing:.04em}
 .sechead h2{font-size:clamp(20px,3.6vw,28px)}
 ul.dir{list-style:none;padding:0}ul.dir li{padding:.5rem 0;border-bottom:1px solid var(--line)}
 .az{display:flex;flex-wrap:wrap;gap:.35rem;margin:1rem 0}.az a{display:inline-block;min-width:2.2rem;text-align:center;padding:.35rem .5rem;border:1px solid var(--line);border-radius:999px;text-decoration:none}
+/* apothecary-label placeholder for unphotographed items */
+.noph.apoth{background:color-mix(in srgb,var(--c) 14%,var(--paper));color:var(--ink)}
+.noph.apoth::before{content:"";position:absolute;inset:12% 9%;border:1.5px solid color-mix(in srgb,var(--c) 70%,#000);border-radius:46% / 18%;pointer-events:none}
+.noph.apoth .t1{font-family:var(--display);font-size:clamp(12px,3.3vw,15px);letter-spacing:.03em;max-width:84%}
+.noph.apoth .t2{color:color-mix(in srgb,var(--c) 85%,#000);opacity:1}
+.noph.apoth em{color:var(--muted);opacity:1}
+.noph.apoth .t1{width:78%}
+
+.logo .wordmark b{color:#e8916a}

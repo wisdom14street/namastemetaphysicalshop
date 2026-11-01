@@ -17,12 +17,12 @@
  "theme": {
   "ink": "#24301f",
   "paper": "#f2ede1",
-  "accent": "#c4622d",
+  "accent": "#a9501f",
   "fonts": "https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Figtree:wght@400;600;700&display=swap"
  },
  "REVIEW_URL": "",
  "GOOGLE_SITE_VERIFICATION": "",
  "siblings": [],
- "include_no_photo": false,
+ "include_no_photo": true,
  "GA_MEASUREMENT_ID": "G-Y7R5K9NMW0"
 }
